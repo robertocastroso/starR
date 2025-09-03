@@ -1,0 +1,298 @@
+/* Estilos básicos */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra de Navegación */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.logo-img {
+    height: 50px; /* Ajusta la altura de la imagen */
+    width: auto; /* Mantiene la proporción */
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Marquesina (Carrusel) */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 300%; /* Si tienes 3 imágenes */
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+#prevBtn { left: 1rem; }
+#nextBtn { right: 1rem; }
+
+/* Pie de Página (Footer) */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+}
+
+.footer-content h4 {
+    margin-top: 0;
+}
+
+/* CABALLEROS /
+/* ... (Mantén los estilos de header, navbar, footer que ya tienes) ... */
+
+.category-hero {
+    background-color: #f0f0f0;
+    padding: 3rem 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.category-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.category-hero p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Cuadrícula responsiva */
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1200px; /* Ancho máximo del contenedor de la cuadrícula */
+    margin: 0 auto; /* Centrar la cuadrícula */
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 250px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Recorta la imagen para que cubra el espacio */
+    display: block; /* Elimina espacio extra debajo de la imagen */
+}
+
+.product-info {
+    padding: 1rem;
+    flex-grow: 1; /* Permite que el contenido crezca para ocupar espacio */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el botón al final */
+}
+
+.product-info h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.product-info p.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff; /* Color para el precio */
+    margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+    background-color: #28a745; /* Color verde para el botón */
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out;
+    margin-top: auto; /* Empuja el botón hacia abajo si el contenido de texto es más corto */
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+/* producto individual /
+
+/* ... (Mantén los estilos de header, navbar, footer que ya tienes) ... */
+
+.product-page {
+    display: flex;
+    flex-direction: row; /* Columnas en pantallas grandes */
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 3rem;
+}
+
+.product-image-section {
+    flex: 1 1 500px;
+    max-width: 500px;
+}
+
+#main-product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-details-section {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+#product-name {
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.product-info-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.product-features, .product-options, .combination-section {
+    margin-bottom: 2rem;
+}
+
+.product-options .swatch-container, .size-btn-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.swatch:hover {
+    transform: scale(1.1);
+}
+
+.size-btn {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.size-btn:hover {
+    background-color: #eee;
+}
+
+.outfit-gallery {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.outfit-gallery img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.add-to-cart-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .product-page {
+        flex-direction: column; /* Apila las secciones en pantallas pequeñas */
+        align-items: center;
+        padding: 1rem;
+    }
+    .product-image-section, .product-details-section {
+        max-width: 100%;
+        width: 100%;
+    }
+}
