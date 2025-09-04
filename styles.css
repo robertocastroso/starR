@@ -296,3 +296,20 @@ footer {
         width: 100%;
     }
 }
+
+/*descuenstos */
+
+/* Estilos para precios con descuento */
+.product-info p.original-price {
+    text-decoration: line-through; /* Tacha el precio original */
+    color: #888; /* Color más discreto */
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+
+.product-info p.discount-price {
+    color: #dc3545; /* Color rojo para el precio con descuento */
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 0;
+}
