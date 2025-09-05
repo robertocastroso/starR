@@ -205,13 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Lógica para la página de categorías
+    // Lógica para las páginas de categorías y buscador
     const productGridContainer = document.querySelector('.product-grid-container');
+    const allProducts = Object.values(productData).flatMap(category => category.products);
+
     if (productGridContainer) {
         const categoryTitle = document.getElementById('category-title');
         const categoryDescription = document.getElementById('category-description');
         const navLinks = document.querySelectorAll('.navbar a');
-        
+        const searchInput = document.getElementById('search-input');
+        const searchResultsContainer = document.getElementById('search-results');
+
         function createProductCard(product) {
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
@@ -223,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 priceHTML = `<p class="price">$${product.price.toFixed(2)}</p>`;
             }
 
-            // AHORA LA TARJETA ES UN ENLACE
             productCard.innerHTML = `
                 <a href="producto-individual.html?id=${product.id}">
                     <img src="${product.imageUrl}" alt="${product.name}">
@@ -247,9 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Categoría no encontrada');
                 return;
             }
-
-            categoryTitle.textContent = currentData.title;
-            categoryDescription.textContent = currentData.description;
+            if (categoryTitle) categoryTitle.textContent = currentData.title;
+            if (categoryDescription) categoryDescription.textContent = currentData.description;
 
             currentData.products.forEach(product => {
                 const card = createProductCard(product);
@@ -257,22 +259,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                const category = event.target.dataset.category;
-                if (category) {
-                    event.preventDefault();
-                    renderProducts(category);
-                }
-            });
-        });
+        function renderSearchResults(query) {
+            const normalizedQuery = query.toLowerCase();
+            const filteredProducts = allProducts.filter(product => 
+                product.name.toLowerCase().includes(normalizedQuery)
+            );
+            
+            searchResultsContainer.innerHTML = '';
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const initialCategory = urlParams.get('category');
-        if (initialCategory && productData[initialCategory]) {
-            renderProducts(initialCategory);
-        } else {
-            renderProducts('caballeros');
+            if (filteredProducts.length > 0) {
+                filteredProducts.forEach(product => {
+                    const card = createProductCard(product);
+                    searchResultsContainer.appendChild(card);
+                });
+            } else {
+                searchResultsContainer.innerHTML = '<p class="no-results-message">Lo sentimos, no se encontraron productos.</p>';
+            }
+        }
+        
+        // Lógica para la página de categorías
+        if (navLinks.length > 0) {
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    const category = event.target.dataset.category;
+                    if (category) {
+                        event.preventDefault();
+                        renderProducts(category);
+                    }
+                });
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialCategory = urlParams.get('category');
+            if (initialCategory && productData[initialCategory]) {
+                renderProducts(initialCategory);
+            } else if (document.querySelector('.category-page')) {
+                renderProducts('caballeros');
+            }
+        }
+
+        // Lógica para el buscador
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value;
+                renderSearchResults(query);
+            });
         }
     }
 
@@ -283,27 +314,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const productId = urlParams.get('id');
         
         if (productId) {
-            let product = null;
-            // Busca el producto en todas las categorías
-            for (const category in productData) {
-                product = productData[category].products.find(p => p.id === productId);
-                if (product) break;
-            }
+            let product = allProducts.find(p => p.id === productId);
 
             if (product) {
                 document.getElementById('product-name').textContent = product.name;
                 document.getElementById('product-description').textContent = product.details.description;
                 document.getElementById('main-product-image').src = product.imageUrl;
+                document.getElementById('product-price').textContent = `$${product.price ? product.price.toFixed(2) : product.discountPrice.toFixed(2)}`;
 
-                // Llenar la lista de tecnologías
                 const productTechList = document.getElementById('product-tech-list');
                 productTechList.innerHTML = `
-                    <h2>Tecnología y Características</h2>
                     ${product.details.technologies.map(tech => `<li>${tech}</li>`).join('')}
                     <li>Para la temporada: ${product.details.season}</li>
                 `;
 
-                // Llenar los swatches de color
                 const colorSwatches = document.getElementById('color-swatches');
                 colorSwatches.innerHTML = '';
                 product.details.colors.forEach(color => {
@@ -314,7 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     colorSwatches.appendChild(swatch);
                 });
 
-                // Llenar los botones de talla
                 const sizeButtons = document.getElementById('size-buttons');
                 sizeButtons.innerHTML = '';
                 product.details.sizes.forEach(size => {
@@ -324,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     sizeButtons.appendChild(button);
                 });
 
-                // Llenar la galería de combinaciones
                 const outfitGallery = document.getElementById('outfit-combinations');
                 outfitGallery.innerHTML = '';
                 product.details.combinations.forEach(image => {
@@ -333,11 +355,118 @@ document.addEventListener('DOMContentLoaded', () => {
                     imgElement.alt = 'Combinación de outfit';
                     outfitGallery.appendChild(imgElement);
                 });
+
             } else {
                 console.error('Producto no encontrado');
             }
         } else {
             console.error('ID de producto no especificado en la URL');
         }
+    }
+
+    // Lógica para el probador
+    const userForm = document.getElementById('user-form');
+    const scannerSection = document.getElementById('scanner-section');
+    const displayElement = document.getElementById('display-name');
+    const scanInput = document.getElementById('scan-input');
+    const itemsListContainer = document.getElementById('items-list-container');
+    const itemsList = document.getElementById('items-list');
+
+    let scannedItems = [];
+
+    if (userForm) {
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userName = document.getElementById('user-name').value;
+            if (userName) {
+                displayElement.textContent = userName;
+                userForm.style.display = 'none';
+                scannerSection.style.display = 'block';
+                itemsListContainer.style.display = 'block';
+                scanInput.focus();
+            }
+        });
+
+        scanInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const scannedId = scanInput.value.toUpperCase().trim();
+                
+                let product = allProducts.find(p => p.id === scannedId);
+
+                if (product && !scannedItems.some(item => item.id === product.id)) {
+                    scannedItems.push(product);
+                    const listItem = document.createElement('li');
+                    listItem.textContent = product.name;
+                    itemsList.appendChild(listItem);
+                    console.log(`Prenda añadida: ${product.name}`);
+                } else if (scannedItems.some(item => item.id === product.id)) {
+                    alert('Esta prenda ya ha sido escaneada.');
+                } else {
+                    alert('Código de producto no válido.');
+                }
+
+                scanInput.value = '';
+            }
+        });
+    }
+
+    // Lógica del modal de búsqueda
+    const searchBtn = document.getElementById('search-btn');
+    const searchModal = document.getElementById('search-modal');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const modalSearchInput = document.getElementById('modal-search-input');
+    const modalSearchResults = document.getElementById('modal-search-results');
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            searchModal.style.display = 'block';
+            modalSearchInput.focus();
+        });
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            searchModal.style.display = 'none';
+            modalSearchInput.value = '';
+            modalSearchResults.innerHTML = '';
+        });
+    }
+
+    // Cierra el modal al hacer clic fuera de él
+    window.addEventListener('click', (event) => {
+        if (event.target === searchModal) {
+            searchModal.style.display = 'none';
+            modalSearchInput.value = '';
+            modalSearchResults.innerHTML = '';
+        }
+    });
+
+    if (modalSearchInput) {
+        modalSearchInput.addEventListener('input', () => {
+            const query = modalSearchInput.value.toLowerCase().trim();
+            modalSearchResults.innerHTML = '';
+            
+            if (query.length > 0) {
+                const filteredProducts = allProducts.filter(product =>
+                    product.name.toLowerCase().includes(query)
+                );
+
+                if (filteredProducts.length > 0) {
+                    filteredProducts.forEach(product => {
+                        const productItem = document.createElement('a');
+                        productItem.href = `producto-individual.html?id=${product.id}`;
+                        productItem.classList.add('modal-product-item');
+                        productItem.innerHTML = `
+                            <img src="${product.imageUrl}" alt="${product.name}">
+                            <h4>${product.name}</h4>
+                        `;
+                        modalSearchResults.appendChild(productItem);
+                    });
+                } else {
+                    modalSearchResults.innerHTML = '<p>No se encontraron productos.</p>';
+                }
+            }
+        });
     }
 });

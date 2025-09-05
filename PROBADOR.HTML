@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probador Virtual - Tu Marca</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="IMAGENES/LOGO.png">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="IMAGENES/LOGO.png" alt="Logo de Tu Marca de Ropa" class="logo-img">
+        </a>
+        <nav class="navbar">
+            <ul>
+                <li><a href="categorias.html?category=caballeros">CABALLERO</a></li>
+                <li><a href="categorias.html?category=dama">DAMA</a></li>
+                <li><a href="categorias.html?category=ninos">NIÑOS</a></li>
+                <li><a href="categorias.html?category=descuentos">DESCUENTOS</a></li>
+            </ul>
+        </nav>
+    </header>
+<button id="search-btn" class="search-btn">
+    <img src="IMAGENES/lupa.png" alt="Buscar" class="search-icon">
+</button>
+
+<div id="search-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 class="modal-title">Buscar Productos</h2>
+        <input type="text" id="modal-search-input" placeholder="Escribe el nombre del producto...">
+        <div id="modal-search-results" class="modal-results-container">
+            </div>
+    </div>
+</div>
+
+    <main>
+        <section class="fitting-room-container">
+            <h1 class="fitting-room-title">Bienvenido a tu Probador</h1>
+            <p class="fitting-room-subtitle">Ingresa tu nombre para empezar y escanea las etiquetas de las prendas que te probarás.</p>
+
+            <form id="user-form" class="fitting-room-form">
+                <input type="text" id="user-name" placeholder="Escribe tu nombre aquí" required>
+                <button type="submit">Iniciar</button>
+            </form>
+
+            <div id="scanner-section" class="fitting-room-scanner" style="display: none;">
+                <p>¡Hola, <span id="display-name"></span>!</p>
+                <input type="text" id="scan-input" placeholder="Escanea el código de la prenda (ej. CAB001)">
+            </div>
+
+            <div id="items-list-container" style="display: none;">
+                <h2>Tus Prendas para Probar:</h2>
+                <ul id="items-list">
+                    </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h4>Contacto</h4>
+                <p>Dirección: Calle Falsa 123, Ciudad</p>
+                <p>Teléfono: +52 55 1234 5678</p>
+                <p>Email: info@tumarcaderopa.com</p>
+            </div>
+            <div class="social-media">
+                <h4>Síguenos</h4>
+                <a href="#">Facebook</a> | <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Tu Marca de Ropa. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
