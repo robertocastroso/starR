@@ -470,3 +470,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+ // --- Lógica de la Gestión de Probadores (probadores-manager.html) ---
+    const fittingRoomsGrid = document.getElementById('fitting-rooms-grid');
+
+    if (fittingRoomsGrid) { // Si estamos en la página de gestión de probadores
+        function renderFittingRooms() {
+            fittingRoomsGrid.innerHTML = '';
+            let rooms = JSON.parse(localStorage.getItem('fittingRooms')) || {};
+
+            for (let i = 1; i <= totalFittingRooms; i++) {
+                const roomId = `room${i}`;
+                const roomState = rooms[roomId] || { status: 'free' }; // Si no existe, está libre
+
+                const roomCard = document.createElement('div');
+                roomCard.classList.add('room-card');
+                roomCard.classList.add(roomState.status); // Clase 'free' o 'occupied'
+
+                let contentHTML = `<h3>Probador ${i}</h3>`;
+                if (roomState.status === 'occupied') {
+                    contentHTML += `<p>Ocupado por: <strong>${roomState.userName}</strong></p>`;
+                    if (roomState.scannedItems && roomState.scannedItems.length > 0) {
+                        contentHTML += `<div class="scanned-items-list"><h4>Prendas:</h4><ul>`;
+                        roomState.scannedItems.forEach(item => {
+                            contentHTML += `<li><img src="${item.imageUrl}" alt="${item.name}" class="scanned-item-thumbnail"> ${item.name}</li>`;
+                        });
+                        contentHTML += `</ul></div>`;
+                    } else {
+                        contentHTML += `<p>Aún no ha escaneado prendas.</p>`;
+                    }
+                    if (roomState.needsHelp) {
+                        contentHTML += `<p class="help-needed">¡Necesita Ayuda!</p>`;
+                    }
+                    contentHTML += `<button class="clear-room-btn" data-room-id="${roomId}">Liberar Probador</button>`;
+                } else {
+                    contentHTML += `<p>Estado: <strong>Libre</strong></p>`;
+                }
+                
+                roomCard.innerHTML = contentHTML;
+                fittingRoomsGrid.appendChild(roomCard);
+            }
+
+            // Añadir event listeners para los botones de liberar
+            document.querySelectorAll('.clear-room-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const roomIdToClear = e.target.dataset.roomId;
+                    if (confirm(`¿Estás seguro de que quieres liberar el ${roomIdToClear.replace('room', 'Probador ')}?`)) {
+                        saveFittingRoomState(roomIdToClear, { status: 'free' });
+                        renderFittingRooms(); // Volver a renderizar para actualizar
+                    }
+                });
+            });
+        }
+
+        // Renderizar los probadores al cargar la página
+        renderFittingRooms();
+        // Opcional: Actualizar el estado cada cierto tiempo para que la gestión sea dinámica
+        // setInterval(renderFittingRooms, 5000); // Actualiza cada 5 segundos
+    }
+

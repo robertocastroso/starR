@@ -427,3 +427,273 @@ footer {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* Estilos generales (mantén los que ya tienes) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link img {
+    height: 50px; /* Ajusta según el tamaño de tu logo */
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin-left: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Estilos para el sistema de probador (página del cliente) */
+.fitting-room-container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.fitting-room-title {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.fitting-room-subtitle {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.fitting-room-form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.fitting-room-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fitting-room-form button:hover {
+    background-color: #0056b3;
+}
+
+.fitting-room-scanner {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.fitting-room-scanner p {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+#scan-input {
+    width: 60%;
+    padding: 10px;
+    font-size: 1.1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#items-list-container {
+    margin-top: 30px;
+    text-align: left;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+#items-list-container h2 {
+    text-align: center;
+    color: #333;
+}
+
+#items-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Estilos para la página de Gestión de Probadores (probadores-manager.html) --- */
+.fitting-rooms-management-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.management-title {
+    font-size: 2.5em;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.management-subtitle {
+    font-size: 1.1em;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.fitting-rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.room-card {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+}
+
+.room-card h3 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+.room-card p {
+    margin-bottom: 8px;
+    font-size: 1.0em;
+}
+
+.room-card strong {
+    color: #2980b9;
+}
+
+.room-card.free {
+    border-color: #28a745; /* Verde para libre */
+    background-color: #e6ffe6;
+}
+
+.room-card.occupied {
+    border-color: #ffc107; /* Amarillo/naranja para ocupado */
+    background-color: #fff9e6;
+}
+
+.room-card.occupied h3 {
+    color: #d39e00;
+}
+
+.scanned-items-list {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed #ccc;
+}
+
+.scanned-items-list h4 {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.scanned-items-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scanned-items-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.scanned-item-thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-right: 10px;
+    border: 1px solid #eee;
+}
+
+.help-needed {
+    background-color: #dc3545; /* Rojo para ayuda */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.clear-room-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+.clear-room-btn:hover {
+    background-color: #c82333;
+}
